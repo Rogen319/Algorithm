@@ -22,6 +22,7 @@ public class BreadthFirstSearchAlgorithm<V,E> extends AbstractGraphAlgorithm<V, 
 			colorMap.put(GraphAlgorithm.DISCOVERY, Color.RED);
 			colorMap.put(GraphAlgorithm.VISITED, Color.RED);
 			colorMap.put(GraphAlgorithm.CROSS, Color.GREEN);
+			System.out.println();
 		}
 		@Override		
 		@SuppressWarnings("rawtypes")
@@ -96,4 +97,6 @@ public class BreadthFirstSearchAlgorithm<V,E> extends AbstractGraphAlgorithm<V, 
 	public GraphOverlay getOverlay() {
 		return new BreadthFirstOverlay();
 	}
+	
+	
 }
