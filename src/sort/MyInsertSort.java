@@ -1,6 +1,6 @@
 package sort;
 
-public class InsertSort {
+public class MyInsertSort {
 
 	public static void main(String[] args) {
 
