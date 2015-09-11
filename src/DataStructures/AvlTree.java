@@ -44,7 +44,153 @@
          */
         public void remove( Comparable x )
         {
-            System.out.println( "Sorry, remove unimplemented" );
+        	remove( x, root );
+        }
+        public AvlNode remove( Comparable x, AvlNode t )
+        {
+        	if(t == null)
+    			return null;
+    		if(find(x)==null) return t;
+    		int compareResult = x.compareTo(t.element);
+    		
+    		if(compareResult < 0){
+    			t.left = remove(x, t.left);
+    			//完了之后验证该子树是否平衡
+    			if(t.right != null){		//若右子树为空，则一定是平衡的，此时左子树相当对父节点深度最多为1, 所以只考虑右子树非空情况
+    				if(t.left == null){		//若左子树删除后为空，则需要判断右子树
+    					if(height(t.right)-t.height == 2){
+    						AvlNode k = t.right;
+    						if(k.right != null){		//右子树存在，按正常情况单旋转
+    							t = rotateWithRightChild(t);
+    						}else{						//否则是右左情况，双旋转				
+    							t = doubleWithRightChild(t);
+    						}
+    					}
+    				}else{					//否则判断左右子树的高度差
+    					//左子树自身也可能不平衡，故先平衡左子树，再考虑整体
+    					AvlNode k = t.left;
+    					//删除操作默认用右子树上最小节点补删除的节点
+    					//k的左子树高度不低于k的右子树
+    					if(k.right != null){
+    						if(height(k.left)-height(k.right) == 2){
+    							AvlNode m = k.left;
+    							if(m.left != null){		//左子树存在，按正常情况单旋转
+    								k = rotateWithLeftChild(k);
+    							}else{						//否则是左右情况，双旋转				
+    								k = doubleWithLeftChild(k);								
+    							}
+    						}
+    					}else{
+    						if(height(k.left) - k.height ==2){
+    							AvlNode m = k.left;
+    							if(m.left != null){		//左子树存在，按正常情况单旋转
+    								k = rotateWithLeftChild(k);
+    							}else{						//否则是左右情况，双旋转				
+    								k = doubleWithLeftChild(k);
+    							}
+    						}
+    					}					
+    					if(height(t.right)-height(t.left) == 2){
+    						//右子树自身一定是平衡的，左右失衡的话单旋转可以解决问题
+    						t = rotateWithRightChild(t);
+    					}
+    				}
+    			}
+    			//完了之后更新height值
+    			t.height = Math.max(height(t.left), height(t.right))+1;
+    		}else if(compareResult > 0){
+    			t.right = remove(x, t.right);
+    			//下面验证子树是否平衡
+    			if(t.left != null){			//若左子树为空，则一定是平衡的，此时右子树相当对父节点深度最多为1
+    				if(t.right == null){		//若右子树删除后为空，则只需判断左子树
+    					if(height(t.left)-t.height ==2){
+    						AvlNode k = t.left;
+    						if(k.left != null){
+    							t = rotateWithLeftChild(t);
+    						}else{
+    							t = doubleWithLeftChild(t);
+    						}
+    					}					
+    				}else{				//若右子树删除后非空，则判断左右子树的高度差
+    					//右子树自身也可能不平衡，故先平衡右子树，再考虑整体
+    					AvlNode k = t.right;
+    					//删除操作默认用右子树上最小节点（靠左）补删除的节点
+    					//k的右子树高度不低于k的左子树					
+    					if(k.left != null){
+    						if(height(k.right)-height(k.left) == 2){
+    							AvlNode m = k.right;
+    							if(m.right != null){		//右子树存在，按正常情况单旋转
+    								k = rotateWithRightChild(k);
+    							}else{						//否则是右左情况，双旋转				
+    								k = doubleWithRightChild(k);
+    							}
+    						}
+    					}else{
+    						if(height(k.right)-k.height == 2){
+    							AvlNode m = k.right;
+    							if(m.right != null){		//右子树存在，按正常情况单旋转
+    								k = rotateWithRightChild(k);
+    							}else{						//否则是右左情况，双旋转				
+    								k = doubleWithRightChild(k);
+    							}
+    						}
+    					}					
+    					if(height(t.left) - height(t.right) == 2){
+    						//左子树自身一定是平衡的，左右失衡的话单旋转可以解决问题
+    						t = rotateWithLeftChild(t);			
+    					}
+    				}
+    			}
+    			//完了之后更新height值
+    			t.height = Math.max(height(t.left), height(t.right))+1;
+    		}else if(t.left != null && t.right != null){
+    			//默认用其右子树的最小数据代替该节点的数据并递归的删除那个节点
+    			t.element = findMin(t.right).element;
+    			t.right = remove(t.element, t.right);			
+    			if(t.right == null){		//若右子树删除后为空，则只需判断左子树与根的高度差
+    				if(height(t.left)-t.height ==2){
+    					AvlNode k = t.left;
+    					if(k.left != null){
+    						t = rotateWithLeftChild(t);
+    					}else{
+    						t = doubleWithLeftChild(t);
+    					}
+    				}					
+    			}else{				//若右子树删除后非空，则判断左右子树的高度差
+    				//右子树自身也可能不平衡，故先平衡右子树，再考虑整体
+    				AvlNode k = t.right;
+    				//删除操作默认用右子树上最小节点（靠左）补删除的节点
+    				
+    				if(k.left != null){
+    					if(height(k.right)-height(k.left) == 2){
+    						AvlNode m = k.right;
+    						if(m.right != null){		//右子树存在，按正常情况单旋转
+    							k = rotateWithRightChild(k);
+    						}else{						//否则是右左情况，双旋转				
+    							k = doubleWithRightChild(k);
+    						}
+    					}	
+    				}else{
+    					if(height(k.right)-k.height == 2){
+    						AvlNode m = k.right;
+    						if(m.right != null){		//右子树存在，按正常情况单旋转
+    							k = rotateWithRightChild(k);
+    						}else{						//否则是右左情况，双旋转				
+    							k = doubleWithRightChild(k);
+    						}
+    					}	
+    				}
+    				//左子树自身一定是平衡的，左右失衡的话单旋转可以解决问题
+    				if(height(t.left) - height(t.right) == 2){
+    					t = rotateWithLeftChild(t);			
+    				}
+    			}
+    			//完了之后更新height值
+    			t.height = Math.max(height(t.left), height(t.right))+1;
+    		}else{
+    			t = (t.left != null)?t.left:t.right;		
+    		}
+    		return t;
         }
 
         /**
@@ -288,22 +434,23 @@
         public static void main( String [ ] args )
         {
             AvlTree t = new AvlTree( );
-            final int NUMS = 4000;
+            final int NUMS = 10;
             final int GAP  =   37;
 
             System.out.println( "Checking... (no more output means success)" );
 
             for( int i = GAP; i != 0; i = ( i + GAP ) % NUMS )
                 t.insert( new MyInteger( i ) );
-
-            if( NUMS < 40 )
-                t.printTree( );
-            if( ((MyInteger)(t.findMin( ))).intValue( ) != 1 ||
-                ((MyInteger)(t.findMax( ))).intValue( ) != NUMS - 1 )
-                System.out.println( "FindMin or FindMax error!" );
-
-            for( int i = 1; i < NUMS; i++ )
-                 if( ((MyInteger)(t.find( new MyInteger( i ) ))).intValue( ) != i )
-                     System.out.println( "Find error1!" );
+            
+            t.printTree( );
+            t.remove(new MyInteger(6));
+            t.printTree( );
+//            if( ((MyInteger)(t.findMin( ))).intValue( ) != 1 ||
+//                ((MyInteger)(t.findMax( ))).intValue( ) != NUMS - 1 )
+//                System.out.println( "FindMin or FindMax error!" );
+//
+//            for( int i = 1; i < NUMS; i++ )
+//                 if( ((MyInteger)(t.find( new MyInteger( i ) ))).intValue( ) != i )
+//                     System.out.println( "Find error1!" );
     }
 }
