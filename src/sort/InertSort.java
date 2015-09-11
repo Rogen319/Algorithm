@@ -17,8 +17,6 @@ public class InertSort implements ISort {
 				data[i] = key;
 				i -= 1;
 			}
-
 		}
-
 	}
 }
