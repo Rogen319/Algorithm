@@ -7,8 +7,6 @@ import java.awt.Color;
 
 
 public interface GraphOverlay {
-	@SuppressWarnings("rawtypes")
 	public Color edgeColor(Edge edge);
-	@SuppressWarnings("rawtypes")
 	public Color vertexColor(Vertex vertex);
 }

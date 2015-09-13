@@ -12,7 +12,6 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 public class DepthFirstSearchAlgorithm<V,E> extends AbstractGraphAlgorithm<V, E> {
 	private class DepthFirstOverlay implements GraphOverlay {
 		Map<Integer, Color> colorMap = new HashMap<Integer, Color>();
@@ -23,13 +22,12 @@ public class DepthFirstSearchAlgorithm<V,E> extends AbstractGraphAlgorithm<V, E>
 			colorMap.put(GraphAlgorithm.VISITED, Color.RED);
 			colorMap.put(GraphAlgorithm.BACK, Color.GREEN);
 		}
-		@Override		
-		@SuppressWarnings("rawtypes")
+		
+		@Override
 		public Color edgeColor(Edge edge) {
 			return colorMap.get(edgeLabels.get(edge));
 		}
 
-		@SuppressWarnings("rawtypes")
 		@Override
 		public Color vertexColor(Vertex vertex) {
 			return colorMap.get(vertexLabels.get(vertex));
@@ -56,7 +54,6 @@ public class DepthFirstSearchAlgorithm<V,E> extends AbstractGraphAlgorithm<V, E>
 	}
 	
 	public void search(Map<String, Vertex<V>> parameters) {
-
 		for (Vertex<V> vertex: G.vertices()) {
 			vertexLabels.put(vertex, UNEXPLORED);
 		}

@@ -40,9 +40,7 @@ public class JGraphFrame extends JFrame {
 	private Map<String, Vertex<String>> vertexMap;
 
 	private JGraphPanel<String,String> graphPanel;
-	@SuppressWarnings("rawtypes")
 	private JComboBox searchBox;
-	@SuppressWarnings("rawtypes")
 	private DefaultComboBoxModel searchBoxModel;
 	
 	public JGraphFrame(Graph<String, String> G) {
@@ -53,7 +51,6 @@ public class JGraphFrame extends JFrame {
 		init();
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void registerGraphAlgorithm(String name, GraphAlgorithm<String, String> algorithm) {
 		searchMap.put(name, algorithm);
 		((DefaultComboBoxModel) searchBox.getModel()).addElement(name);
@@ -66,7 +63,6 @@ public class JGraphFrame extends JFrame {
 		initGraph();
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void init() {
 		JMenuBar mb = new JMenuBar();
 		JMenu menu = new JMenu("File");

@@ -10,6 +10,8 @@ import graph.util.Position;
 
 import java.util.Iterator;
 
+
+
 public class EdgeListGraph<V,E> implements Graph<V,E> {
 	private class EdgeListVertex implements Vertex<V> {
 		Position<EdgeListVertex> position;

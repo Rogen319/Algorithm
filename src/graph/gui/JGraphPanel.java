@@ -13,19 +13,12 @@ import javax.swing.JPanel;
 
 
 public class JGraphPanel<V, E> extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	private class DefaultOverlay implements GraphOverlay {
-		@SuppressWarnings("rawtypes")
 		@Override
 		public Color edgeColor(Edge edge) {
 			return Color.BLACK;
 		}
 
-		@SuppressWarnings("rawtypes")
 		@Override
 		public Color vertexColor(Vertex vertex) {
 			return Color.BLACK;
@@ -35,7 +28,6 @@ public class JGraphPanel<V, E> extends JPanel {
 	private Graph<V,E> G;
 	private Map<Vertex<V>, Coordinate> points;
 	private FontMetrics fm;
-	@SuppressWarnings({"unused"})
 	private int ascent, fh, space;
 	private int width;
 	private int height;
@@ -103,7 +95,7 @@ public class JGraphPanel<V, E> extends JPanel {
 		    
 		    String line = vertex.toString();
 		    drawString(g, line, fm.stringWidth(line), coord.x, coord.y + ascent/2);
-
+		    
 		}
 	}
 	

@@ -31,7 +31,7 @@ public class Heap<K, V> implements PriorityQueue<K, V> {
 	
 	public Heap() {
 		this(new Comparator<K>() {
-			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@SuppressWarnings("unchecked")
 			@Override
 			public int compare(K key0, K key1) {
 				if (Comparable.class.isInstance(key0)) {
@@ -44,12 +44,14 @@ public class Heap<K, V> implements PriorityQueue<K, V> {
 		});
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Heap(Comparator<K> comparator) {
 		this.comparator = comparator;
 		array = new Object[20];
 		end = 1;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void doubleArray() {
 		Object[] temp = new Object[array.length*2];
 		System.arraycopy(array, 0, temp, 0, array.length);

@@ -209,7 +209,6 @@ public class LinkedList<T> implements List<T> {
 		System.out.println("list: " + list);
 		list.insertBefore(p3, "Tanya");
 		System.out.println("list: " + list);
-		@SuppressWarnings("rawtypes")
 		Iterator it = list.iterator();
 		while (it.hasNext()) {
 			for (String s : list) {
