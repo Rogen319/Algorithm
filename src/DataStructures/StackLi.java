@@ -1,5 +1,7 @@
     package DataStructures;
 
+import java.util.ArrayList;
+
     // StackLi class
     //
     // CONSTRUCTION: with no initializer
